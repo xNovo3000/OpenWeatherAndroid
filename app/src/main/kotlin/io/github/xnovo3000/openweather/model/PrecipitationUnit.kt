@@ -8,6 +8,24 @@ enum class PrecipitationUnit(
     val queryName: String,
     val converter: (Double) -> Double
 ) {
+
     MM(R.string.precipitation_unit_mm, "mm", { it }),
-    INCH(R.string.precipitation_unit_inch, "inch", { it / 25.4 })
+    INCH(R.string.precipitation_unit_inch, "inch", { it / 25.4 });
+
+    companion object {
+
+        private fun fromString(value: String): PrecipitationUnit? {
+            return when (value) {
+                "mm" -> MM
+                "inch" -> INCH
+                else -> null
+            }
+        }
+
+        fun fromStringOrDefault(value: String): PrecipitationUnit {
+            return fromString(value) ?: MM
+        }
+
+    }
+
 }

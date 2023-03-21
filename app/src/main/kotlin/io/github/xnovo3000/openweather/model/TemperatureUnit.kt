@@ -8,6 +8,24 @@ enum class TemperatureUnit(
     val queryName: String,
     val converter: (Double) -> Double
 ) {
+
     CELSIUS(R.string.temperature_unit_celsius, "celsius", { it }),
-    FAHRENHEIT(R.string.temperature_unit_fahrenheit, "fahrenheit", { it * 1.8 + 32 })
+    FAHRENHEIT(R.string.temperature_unit_fahrenheit, "fahrenheit", { it * 1.8 + 32 });
+
+    companion object {
+
+        private fun fromString(value: String): TemperatureUnit? {
+            return when (value) {
+                "celsius" -> CELSIUS
+                "fahrenheit" -> FAHRENHEIT
+                else -> null
+            }
+        }
+
+        fun fromStringOrDefault(value: String): TemperatureUnit {
+            return fromString(value) ?: CELSIUS
+        }
+
+    }
+
 }

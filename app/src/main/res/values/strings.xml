@@ -12,6 +12,9 @@
     <string name="forecast_drawer_current_position">Current position</string>
     <string name="forecast_drawer_temperature">%d°</string>
     <string name="forecast_drawer_temperature_unknown">--°</string>
+    <string name="forecast_top_bar_no_location">Weather</string>
+    <string name="forecast_empty_content_rationale">There are no locations</string>
+    <string name="forecast_empty_content_add_location">Add one</string>
 
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>

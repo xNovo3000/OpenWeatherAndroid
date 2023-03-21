@@ -202,7 +202,7 @@ fun ForecastDrawer(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @ExperimentalMaterial3Api
 @Composable
-fun Composable() {
+private fun Preview() {
     WeatherTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             ForecastDrawer(

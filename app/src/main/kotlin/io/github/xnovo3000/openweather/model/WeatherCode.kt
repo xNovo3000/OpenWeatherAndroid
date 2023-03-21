@@ -59,4 +59,25 @@ enum class WeatherCode(
         }
     }
 
+    companion object {
+
+        private fun fromInt(value: Int): WeatherCode? {
+            return when (value) {
+                0 -> CLEAR
+                1 -> PARTLY_CLOUDY
+                2 -> CLOUDY
+                3 -> FOGGY
+                4 -> RAINY
+                5 -> SNOWY
+                6 -> THUNDERSTORM
+                else -> null
+            }
+        }
+
+        fun fromIntOrDefault(value: Int): WeatherCode {
+            return fromInt(value) ?: CLEAR
+        }
+
+    }
+
 }
