@@ -59,6 +59,11 @@ enum class WeatherCode(
         }
     }
 
+    @DrawableRes
+    fun getIcon(isNightTime: Boolean): Int {
+        return if (isNightTime) night else day
+    }
+
     companion object {
 
         private fun fromInt(value: Int): WeatherCode? {

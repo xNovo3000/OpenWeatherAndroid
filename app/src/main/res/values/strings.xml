@@ -15,6 +15,9 @@
     <string name="forecast_top_bar_no_location">Weather</string>
     <string name="forecast_empty_content_rationale">There are no locations</string>
     <string name="forecast_empty_content_add_location">Add one</string>
+    <string name="forecast_location_hour_temperature">%d°</string>
+    <string name="forecast_location_hour_wind">%1$d %2$s</string>
+    <string name="forecast_location_hour_time">%1$tH:%1$tM</string>
 
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>

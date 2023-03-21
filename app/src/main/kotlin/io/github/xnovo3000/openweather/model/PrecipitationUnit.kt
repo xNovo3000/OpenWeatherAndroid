@@ -6,11 +6,11 @@ import io.github.xnovo3000.openweather.R
 enum class PrecipitationUnit(
     @StringRes val stringRes: Int,
     val queryName: String,
-    val converter: (Double) -> Double
+    val converter: (Int) -> Int
 ) {
 
     MM(R.string.precipitation_unit_mm, "mm", { it }),
-    INCH(R.string.precipitation_unit_inch, "inch", { it / 25.4 });
+    INCH(R.string.precipitation_unit_inch, "inch", { (it / 25.4).toInt() });
 
     companion object {
 
