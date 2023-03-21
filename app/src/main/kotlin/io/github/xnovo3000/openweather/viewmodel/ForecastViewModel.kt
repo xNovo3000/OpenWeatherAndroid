@@ -20,19 +20,19 @@ class ForecastViewModel @Inject constructor(
     settings: DataStore<Settings>
 ) : ViewModel() {
 
-    private val mutableLocations = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
-    private val temperatureUnit = settings.data.map { TemperatureUnit.valueOf(it.temperatureUnit) }
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
+    private val temperatureUnitFlow = settings.data.map {
+        TemperatureUnit.fromStringOrDefault(it.temperatureUnit)
+    }
 
-    val locations = combine(mutableLocations, temperatureUnit) { locationList, unit ->
+    val locations = combine(locationsFlow, temperatureUnitFlow) { locationList, temperatureUnit ->
         locationList.map { location ->
             DrawerLocationItem(
                 id = location.id,
                 name = location.name,
-                lastUpdate = location.lastUpdate,
-                temperature = location.temperature?.let { unit.converter(it.toDouble()) }?.toInt(),
+                temperature = location.temperature?.let { temperatureUnit.converter(it) },
                 weatherCode = location.weatherCode,
-                sunrise = location.sunrise,
-                sunset = location.sunset
+                isNightTime = location.lastUpdate < location.sunrise || location.lastUpdate > location.sunset
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

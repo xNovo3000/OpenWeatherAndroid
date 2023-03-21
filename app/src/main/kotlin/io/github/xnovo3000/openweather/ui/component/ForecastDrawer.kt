@@ -3,7 +3,6 @@ package io.github.xnovo3000.openweather.ui.component
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.EditLocationAlt
 import androidx.compose.material.icons.rounded.Remove
@@ -22,16 +21,13 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import io.github.xnovo3000.openweather.R
 import io.github.xnovo3000.openweather.model.WeatherCode
 import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
-import java.time.LocalDateTime
 
 data class DrawerLocationItem(
     val id: Long,
     val name: String,
-    val lastUpdate: LocalDateTime,
     val temperature: Int?,
     val weatherCode: WeatherCode?,
-    val sunrise: LocalDateTime?,
-    val sunset: LocalDateTime?
+    val isNightTime: Boolean?
 )
 
 @ExperimentalMaterial3Api
@@ -51,21 +47,16 @@ fun ForecastDrawer(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Card(
+            Image(
                 modifier = Modifier.size(64.dp),
-                shape = RoundedCornerShape(32.dp)
-            ) {
-                Image(
-                    modifier = Modifier.size(64.dp),
-                    painter = rememberDrawablePainter(
-                        drawable = ContextCompat.getDrawable(
-                            LocalContext.current,
-                            R.mipmap.ic_launcher
-                        )
-                    ),
-                    contentDescription = null
-                )
-            }
+                painter = rememberDrawablePainter(
+                    drawable = ContextCompat.getDrawable(
+                        LocalContext.current,
+                        R.mipmap.ic_launcher
+                    )
+                ),
+                contentDescription = null
+            )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 modifier = Modifier.weight(1F),
@@ -104,22 +95,18 @@ fun ForecastDrawer(
                         )
                     },
                     icon = {
-                        if (it.weatherCode == null) {
+                        if (it.weatherCode != null && it.isNightTime != null) {
                             Icon(
                                 modifier = Modifier.size(24.dp),
-                                imageVector = Icons.Rounded.Remove,
+                                painter = painterResource(
+                                    id = it.weatherCode.getIcon(isNightTime = it.isNightTime)
+                                ),
                                 contentDescription = null
                             )
                         } else {
                             Icon(
                                 modifier = Modifier.size(24.dp),
-                                painter = painterResource(
-                                    id = it.weatherCode.getIcon(
-                                        sunrise = it.sunrise ?: LocalDateTime.now(),
-                                        sunset = it.sunset ?: LocalDateTime.now(),
-                                        now = it.lastUpdate
-                                    )
-                                ),
+                                imageVector = Icons.Rounded.Remove,
                                 contentDescription = null
                             )
                         }
@@ -211,11 +198,9 @@ private fun Preview() {
                     DrawerLocationItem(
                         id = it + 1L,
                         name = if (it == 1) "" else "Location $it",
-                        lastUpdate = LocalDateTime.now(),
                         temperature = if (it == 4) null else 20 + it,
                         weatherCode = if (it == 4) null else WeatherCode.values()[it],
-                        sunrise = if (it == 4) null else LocalDateTime.now().minusHours(1),
-                        sunset = if (it == 4) null else LocalDateTime.now().plusDays(1)
+                        isNightTime = it % 2 == 0
                     )
                 },
                 onItemClick = {},
