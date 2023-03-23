@@ -29,7 +29,8 @@ fun WeatherUI() {
         WeatherSurface {
             AnimatedNavHost(
                 navController = navController,
-                startDestination = WeatherRoute.FORECAST.routeName
+                startDestination = WeatherRoute.FORECAST.routeName,
+                route = "root"
             ) {
                 // Forecast
                 composable(route = WeatherRoute.FORECAST.routeName) {

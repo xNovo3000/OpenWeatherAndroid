@@ -18,50 +18,53 @@ import io.github.xnovo3000.openweather.model.WeatherCode
 import io.github.xnovo3000.openweather.model.WindDirection
 import io.github.xnovo3000.openweather.model.WindSpeedUnit
 import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.time.ZoneId
 
-data class ForecastLocationHourItem(
-    val dateTime: LocalDateTime,
-    val temperature: Int,
+data class ForecastLocationDayItem(
+    val date: LocalDate,
     val weatherCode: WeatherCode,
+    val temperatureMin: Int,
+    val temperatureMax: Int,
     val windSpeed: Int,
     val windDirection: WindDirection,
-    val windSpeedUnit: WindSpeedUnit,
-    val isNightTime: Boolean
+    val windSpeedUnit: WindSpeedUnit
 )
 
 @Composable
-fun ForecastLocationHour(item: ForecastLocationHourItem) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+fun ForecastLocationDay(item: ForecastLocationDayItem) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
+            modifier = Modifier.weight(1F),
             text = stringResource(
-                id = R.string.forecast_location_hour_time,
-                item.dateTime.atZone(ZoneId.systemDefault()).toEpochSecond()
-            ),
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(2.dp))
-        Icon(
-            modifier = Modifier.size(32.dp),
-            painter = painterResource(
-                id = item.weatherCode.getIcon(isNightTime = item.isNightTime)
-            ),
-            contentDescription = null
-        )
-        Spacer(modifier = Modifier.height(2.dp))
-        Text(
-            text = stringResource(
-                id = R.string.forecast_location_hour_temperature,
-                item.temperature
+                id = R.string.forecast_location_day_date,
+                item.date.atTime(0, 0)
+                    .atZone(ZoneId.systemDefault()).toEpochSecond()
             ),
             style = MaterialTheme.typography.bodyLarge
         )
-        Spacer(modifier = Modifier.height(1.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                painter = painterResource(
+                    id = item.weatherCode.getIcon(isNightTime = false)
+                ),
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = stringResource(
+                    id = R.string.forecast_location_day_temperature,
+                    item.temperatureMax, item.temperatureMin
+                ),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+        Row(
+            modifier = Modifier.weight(1F),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(
@@ -77,7 +80,7 @@ fun ForecastLocationHour(item: ForecastLocationHourItem) {
                         id = item.windSpeedUnit.stringRes
                     )
                 ),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -89,15 +92,15 @@ fun ForecastLocationHour(item: ForecastLocationHourItem) {
 private fun Preview() {
     WeatherTheme {
         Surface {
-            ForecastLocationHour(
-                item = ForecastLocationHourItem(
-                    dateTime = LocalDateTime.now(),
-                    temperature = 15,
+            ForecastLocationDay(
+                item = ForecastLocationDayItem(
+                    date = LocalDate.now(),
                     weatherCode = WeatherCode.PARTLY_CLOUDY,
-                    windSpeed = 6,
-                    windDirection = WindDirection.WEST,
-                    windSpeedUnit = WindSpeedUnit.KMH,
-                    isNightTime = false
+                    temperatureMin = 12,
+                    temperatureMax = 22,
+                    windSpeed = 5,
+                    windDirection = WindDirection.NORTH_EAST,
+                    windSpeedUnit = WindSpeedUnit.KMH
                 )
             )
         }

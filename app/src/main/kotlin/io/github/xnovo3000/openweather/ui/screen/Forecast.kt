@@ -68,7 +68,8 @@ fun ForecastScreen(
     ) {
         AnimatedNavHost(
             navController = innerNavController,
-            startDestination = ForecastScreenRoute.EMPTY.routeName
+            startDestination = ForecastScreenRoute.EMPTY.routeName,
+            route = "forecast"
         ) {
             // Empty route
             composable(route = ForecastScreenRoute.EMPTY.routeName) {
