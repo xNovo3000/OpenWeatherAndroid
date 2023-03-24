@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Manifest -->
@@ -15,14 +16,14 @@
     <string name="forecast_top_bar_no_location">Weather</string>
     <string name="forecast_empty_content_rationale">There are no locations</string>
     <string name="forecast_empty_content_add_location">Add one</string>
-    <string name="forecast_location_hour_temperature">%d°</string>
-    <string name="forecast_location_hour_wind">%1$d %2$s</string>
-    <string name="forecast_location_hour_time">%1$tH:%1$tM</string>
-    <string name="forecast_location_hourly_title">Hourly forecast</string>
-    <string name="forecast_location_day_temperature">%1$d°/%2$d°</string>
-    <string name="forecast_location_day_date">%1$ta %1$tb %1$td</string>
-    <string name="forecast_location_day_wind">%1$d %2$s</string>
     <string name="forecast_location_daily_title">Daily forecast</string>
+    <string name="forecast_location_day_date">%1$ta %1$tb %1$td</string>
+    <string name="forecast_location_day_precipitation_probability">%d%%</string>
+    <string name="forecast_location_day_temperature">%1$d°/%2$d°</string>
+    <string name="forecast_location_hourly_title">Hourly forecast</string>
+    <string name="forecast_location_hour_temperature">%d°</string>
+    <string name="forecast_location_hour_time">%1$tH:%1$tM</string>
+    <string name="forecast_location_hour_wind">%1$d %2$s</string>
 
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>

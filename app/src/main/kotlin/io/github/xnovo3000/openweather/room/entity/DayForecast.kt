@@ -38,6 +38,5 @@ data class DayForecast(
     val temperatureMax: Int,
     val sunrise: LocalDateTime,
     val sunset: LocalDateTime,
-    val windSpeed: Int,
-    val windDirection: WindDirection
+    val precipitationProbability: Int
 )

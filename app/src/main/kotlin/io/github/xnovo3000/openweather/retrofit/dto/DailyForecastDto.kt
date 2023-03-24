@@ -10,6 +10,5 @@ data class DailyForecastDto(
     val temperature_2m_min: List<Double>,
     val sunrise: List<LocalDateTime>,
     val sunset: List<LocalDateTime>,
-    val windspeed_10m_max: List<Double>,
-    val winddirection_10m_dominant: List<Int>
+    val precipitation_probability_max: List<Int>
 )

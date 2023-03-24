@@ -2,6 +2,8 @@ package io.github.xnovo3000.openweather.ui.item
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,8 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.xnovo3000.openweather.R
 import io.github.xnovo3000.openweather.model.WeatherCode
-import io.github.xnovo3000.openweather.model.WindDirection
-import io.github.xnovo3000.openweather.model.WindSpeedUnit
 import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
 import java.time.LocalDate
 import java.time.ZoneId
@@ -26,14 +26,20 @@ data class ForecastLocationDayItem(
     val weatherCode: WeatherCode,
     val temperatureMin: Int,
     val temperatureMax: Int,
-    val windSpeed: Int,
-    val windDirection: WindDirection,
-    val windSpeedUnit: WindSpeedUnit
+    val precipitationProbability: Int
 )
 
 @Composable
 fun ForecastLocationDay(item: ForecastLocationDayItem) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier
+            .padding(
+                horizontal = 16.dp,
+                vertical = 4.dp
+            )
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             modifier = Modifier.weight(1F),
             text = stringResource(
@@ -43,15 +49,25 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
             ),
             style = MaterialTheme.typography.bodyLarge
         )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(
-                    id = item.weatherCode.getIcon(isNightTime = false)
-                ),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = stringResource(
+                id = R.string.forecast_location_day_precipitation_probability,
+                item.precipitationProbability
+            ),
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Icon(
+            modifier = Modifier.size(16.dp),
+            imageVector = Icons.Rounded.WaterDrop,
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Row(
+            modifier = Modifier.widthIn(min = 112.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ) {
             Text(
                 text = stringResource(
                     id = R.string.forecast_location_day_temperature,
@@ -59,28 +75,13 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
                 ),
                 style = MaterialTheme.typography.bodyLarge
             )
-        }
-        Row(
-            modifier = Modifier.weight(1F),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            Spacer(modifier = Modifier.width(8.dp))
             Icon(
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(28.dp),
                 painter = painterResource(
-                    id = item.windDirection.icon
+                    id = item.weatherCode.getIcon(isNightTime = false)
                 ),
                 contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = stringResource(
-                    id = R.string.forecast_location_hour_wind,
-                    item.windSpeed, stringResource(
-                        id = item.windSpeedUnit.stringRes
-                    )
-                ),
-                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -98,9 +99,7 @@ private fun Preview() {
                     weatherCode = WeatherCode.PARTLY_CLOUDY,
                     temperatureMin = 12,
                     temperatureMax = 22,
-                    windSpeed = 5,
-                    windDirection = WindDirection.NORTH_EAST,
-                    windSpeedUnit = WindSpeedUnit.KMH
+                    precipitationProbability = 89
                 )
             )
         }
