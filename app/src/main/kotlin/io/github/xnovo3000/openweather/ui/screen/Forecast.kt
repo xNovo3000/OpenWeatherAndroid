@@ -1,10 +1,7 @@
 package io.github.xnovo3000.openweather.ui.screen
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -14,8 +11,9 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
 import io.github.xnovo3000.openweather.ui.component.ForecastDrawer
-import io.github.xnovo3000.openweather.ui.navigate
+import io.github.xnovo3000.openweather.ui.navigateWeather
 import io.github.xnovo3000.openweather.ui.screen.forecast.ForecastScreenEmpty
+import io.github.xnovo3000.openweather.ui.screen.forecast.ForecastScreenLocation
 import io.github.xnovo3000.openweather.viewmodel.ForecastViewModel
 import kotlinx.coroutines.launch
 
@@ -43,25 +41,39 @@ fun ForecastScreen(
             // Get selected locations
             val locations by viewModel.locations.collectAsState()
             val backStackEntry by innerNavController.currentBackStackEntryAsState()
-            // TODO: Update innerNavController in case of invalid route
+            // Update innerNavController in case of invalid route
             LaunchedEffect(locations, backStackEntry) {
-
+                // Get the ID of the selected location and location ids
+                val id = backStackEntry?.arguments?.getLong("id")
+                val locationIds = locations.map { it.id }
+                // Manage navigation
+                when {
+                    locationIds.isEmpty() || id == null -> {
+                        innerNavController.navigateForecast(ForecastScreenRoute.EMPTY)
+                    }
+                    !locationIds.contains(id) -> {
+                        innerNavController.navigateForecast(
+                            route = ForecastScreenRoute.LOCATIONS,
+                            args = mapOf("id" to locationIds.first())
+                        )
+                    }
+                }
             }
             // Build drawer with locations
             ForecastDrawer(
-                selectedLocationId = 0,
+                selectedLocationId = backStackEntry?.arguments?.getLong("id") ?: -1L,
                 items = locations,
                 onItemClick = {
-                    innerNavController.navigate(
+                    innerNavController.navigateForecast(
                         route = ForecastScreenRoute.LOCATIONS,
                         args = mapOf("id" to it.id)
                     )
                 },
                 onManageLocationsClick = {
-                    navController.navigate(WeatherRoute.MANAGE_LOCATIONS)
+                    navController.navigateWeather(WeatherRoute.MANAGE_LOCATIONS)
                 },
                 onSettingsClick = {
-                    navController.navigate(WeatherRoute.SETTINGS)
+                    navController.navigateWeather(WeatherRoute.SETTINGS)
                 }
             )
         }
@@ -82,13 +94,17 @@ fun ForecastScreen(
             }
             // Route with a location -> show forecast
             composable(route = ForecastScreenRoute.LOCATIONS.routeName) {
-
+                ForecastScreenLocation(
+                    onNavigationIconClick = {
+                        scope.launch { drawerState.open() }
+                    }
+                )
             }
         }
     }
 }
 
-fun NavController.navigate(route: ForecastScreenRoute, args: Map<String, Any>) {
+fun NavController.navigateForecast(route: ForecastScreenRoute, args: Map<String, Any> = emptyMap()) {
     when (route) {
         ForecastScreenRoute.LOCATIONS -> {
             navigate(route.routeName.replace("id", "${args["id"]}")) {

@@ -17,6 +17,6 @@ interface LocationDao {
 
     @Transaction
     @Query("select * from Location where id = :id")
-    fun listenByLocationId(id: Long): Flow<LocationWithForecasts?>
+    fun listenByLocationIdWithForecast(id: Long): Flow<LocationWithForecasts?>
 
 }

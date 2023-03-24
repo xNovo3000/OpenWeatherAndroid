@@ -34,7 +34,7 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
     Row(
         modifier = Modifier
             .padding(
-                horizontal = 16.dp,
+                horizontal = 20.dp,
                 vertical = 4.dp
             )
             .fillMaxWidth(),

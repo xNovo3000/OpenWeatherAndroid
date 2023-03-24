@@ -2,13 +2,12 @@ package io.github.xnovo3000.openweather.ui.screen.forecast
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
 import io.github.xnovo3000.openweather.ui.component.ForecastEmptyContent
 import io.github.xnovo3000.openweather.ui.component.ForecastTopAppBar
-import io.github.xnovo3000.openweather.ui.navigate
+import io.github.xnovo3000.openweather.ui.navigateWeather
 
 @ExperimentalMaterial3Api
 @Composable
@@ -27,7 +26,7 @@ fun ForecastScreenEmpty(
         ForecastEmptyContent(
             paddingValues = paddingValues,
             onAddLocationClick = {
-                navController.navigate(WeatherRoute.FIND_LOCATIONS)
+                navController.navigateWeather(WeatherRoute.FIND_LOCATIONS)
             }
         )
     }

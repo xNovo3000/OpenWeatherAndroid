@@ -8,8 +8,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.github.xnovo3000.openweather.ui.screen.ForecastScreen
-import io.github.xnovo3000.openweather.ui.theme.WeatherSurface
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.ui.screen.ManageLocationsScreen
+import io.github.xnovo3000.openweather.ui.theme.*
 
 enum class WeatherRoute(val routeName: String) {
     FORECAST(routeName = "forecast"),
@@ -30,17 +30,25 @@ fun WeatherUI() {
             AnimatedNavHost(
                 navController = navController,
                 startDestination = WeatherRoute.FORECAST.routeName,
+                enterTransition = EnterTransition,
+                exitTransition = ExitTransition,
+                popEnterTransition = PopEnterTransition,
+                popExitTransition = PopExitTransition,
                 route = "root"
             ) {
                 // Forecast
                 composable(route = WeatherRoute.FORECAST.routeName) {
                     ForecastScreen(navController = navController)
                 }
+                // Manage locations
+                composable(route = WeatherRoute.MANAGE_LOCATIONS.routeName) {
+                    ManageLocationsScreen(navController = navController)
+                }
             }
         }
     }
 }
 
-fun NavController.navigate(route: WeatherRoute) {
+fun NavController.navigateWeather(route: WeatherRoute) {
     navigate(route.routeName)
 }
