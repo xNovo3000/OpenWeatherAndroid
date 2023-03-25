@@ -2,7 +2,7 @@ package io.github.xnovo3000.openweather.ui.component
 
 import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -12,23 +12,18 @@ import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun ForecastTopAppBar(
-    locationName: String?,
-    onNavigationIconClick: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior? = null
+fun ManageLocationsTopBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    onNavigationIconClick: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = locationName ?: stringResource(
-                    id = R.string.forecast_top_bar_no_location
-                )
-            )
+            Text(text = stringResource(id = R.string.manage_locations_title))
         },
         navigationIcon = {
             IconButton(onClick = onNavigationIconClick) {
                 Icon(
-                    imageVector = Icons.Rounded.Menu,
+                    imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = null
                 )
             }
@@ -43,8 +38,8 @@ fun ForecastTopAppBar(
 @Composable
 private fun Preview() {
     WeatherTheme {
-        ForecastTopAppBar(
-            locationName = null,
+        ManageLocationsTopBar(
+            scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
             onNavigationIconClick = {}
         )
     }

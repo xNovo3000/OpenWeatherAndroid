@@ -33,7 +33,7 @@ fun ForecastScreenLocation(
                 onNavigationIconClick = onNavigationIconClick
             )
         }
-    ) {
-        it
+    ) { paddingValues ->
+        paddingValues
     }
 }

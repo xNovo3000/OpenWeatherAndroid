@@ -25,6 +25,11 @@
     <string name="forecast_location_hour_time">%1$tH:%1$tM</string>
     <string name="forecast_location_hour_wind">%1$d %2$s</string>
 
+    <!-- ManageLocationsScreen -->
+    <string name="manage_locations_title">Manage locations</string>
+    <string name="manage_locations_current_position">Current position</string>
+    <string name="manage_locations_add_location">Add location</string>
+
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>
     <string name="precipitation_unit_inch">inch</string>
