@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.xnovo3000.openweather.Settings
+import io.github.xnovo3000.openweather.datastore.WeatherSettings
 import io.github.xnovo3000.openweather.model.TemperatureUnit
 import io.github.xnovo3000.openweather.room.WeatherDatabase
 import io.github.xnovo3000.openweather.ui.component.ForecastLocationCurrentItem
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class ForecastLocationViewModel @Inject constructor(
     weatherDatabase: WeatherDatabase,
     savedStateHandle: SavedStateHandle,
-    settings: DataStore<Settings>
+    settings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
     private val locationId: Long = savedStateHandle["id"]!!
@@ -39,7 +39,7 @@ class ForecastLocationViewModel @Inject constructor(
                 // Create the object
                 ForecastLocationCurrentItem(
                     temperature = now.temperature,
-                    temperatureUnit = TemperatureUnit.fromStringOrDefault(settings.temperatureUnit),
+                    temperatureUnit = settings.temperatureUnit,
                     weatherCode = now.weatherCode,
                     isNightTime = location.location.lastUpdate < today.sunrise || location.location.lastUpdate > today.sunset
                 )

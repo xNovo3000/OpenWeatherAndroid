@@ -4,8 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.xnovo3000.openweather.Settings
-import io.github.xnovo3000.openweather.model.TemperatureUnit
+import io.github.xnovo3000.openweather.datastore.WeatherSettings
 import io.github.xnovo3000.openweather.room.WeatherDatabase
 import io.github.xnovo3000.openweather.ui.item.ManageLocationsLocationItem
 import kotlinx.coroutines.Dispatchers
@@ -19,15 +18,11 @@ import javax.inject.Inject
 @HiltViewModel
 class ManageLocationsViewModel @Inject constructor(
     weatherDatabase: WeatherDatabase,
-    settings: DataStore<Settings>
+    settings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
     private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
-    private val temperatureUnitFlow = settings.data.map {
-        withContext(Dispatchers.Default) {
-            TemperatureUnit.fromStringOrDefault(it.temperatureUnit)
-        }
-    }
+    private val temperatureUnitFlow = settings.data.map { it.temperatureUnit }
 
     val locations = combine(locationsFlow, temperatureUnitFlow) { locations, temperatureUnit ->
         withContext(Dispatchers.Default) {
