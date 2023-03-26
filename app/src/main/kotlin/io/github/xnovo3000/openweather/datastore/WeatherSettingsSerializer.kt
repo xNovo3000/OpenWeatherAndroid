@@ -15,12 +15,11 @@ import java.io.OutputStream
 
 object WeatherSettingsSerializer : Serializer<WeatherSettings> {
 
-    // TODO: Get this values from default values
     override val defaultValue: WeatherSettings
         get() = WeatherSettings(
-            queryLanguage = QueryLanguage.ENGLISH,
-            temperatureUnit = TemperatureUnit.CELSIUS,
-            windSpeedUnit = WindSpeedUnit.KMH
+            queryLanguage = QueryLanguage.default(),
+            temperatureUnit = TemperatureUnit.default(),
+            windSpeedUnit = WindSpeedUnit.default()
         )
 
     @ExperimentalSerializationApi

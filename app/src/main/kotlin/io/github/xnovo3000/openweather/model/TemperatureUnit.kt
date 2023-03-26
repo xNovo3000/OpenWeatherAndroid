@@ -1,6 +1,8 @@
 package io.github.xnovo3000.openweather.model
 
 import androidx.annotation.StringRes
+import com.ibm.icu.util.LocaleData
+import com.ibm.icu.util.ULocale
 import io.github.xnovo3000.openweather.R
 
 enum class TemperatureUnit(
@@ -14,16 +16,13 @@ enum class TemperatureUnit(
 
     companion object {
 
-        private fun fromString(value: String): TemperatureUnit? {
-            return when (value) {
-                "celsius" -> CELSIUS
-                "fahrenheit" -> FAHRENHEIT
-                else -> null
+        fun default(): TemperatureUnit {
+            return when (LocaleData.getMeasurementSystem(ULocale.getDefault())) {
+                // LocaleData.MeasurementSystem.SI -> CELSIUS
+                // LocaleData.MeasurementSystem.UK -> CELSIUS
+                LocaleData.MeasurementSystem.US -> FAHRENHEIT
+                else -> CELSIUS
             }
-        }
-
-        fun fromStringOrDefault(value: String): TemperatureUnit {
-            return fromString(value) ?: CELSIUS
         }
 
     }

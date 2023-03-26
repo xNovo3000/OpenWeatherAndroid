@@ -1,6 +1,8 @@
 package io.github.xnovo3000.openweather.model
 
 import androidx.annotation.StringRes
+import com.ibm.icu.util.LocaleData
+import com.ibm.icu.util.ULocale
 import io.github.xnovo3000.openweather.R
 
 enum class WindSpeedUnit(
@@ -16,18 +18,13 @@ enum class WindSpeedUnit(
 
     companion object {
 
-        private fun fromInt(value: Int): WindSpeedUnit? {
-            return when (value) {
-                0 -> KMH
-                1 -> MS
-                2 -> MPH
-                3 -> KN
-                else -> null
+        fun default(): WindSpeedUnit {
+            return when (LocaleData.getMeasurementSystem(ULocale.getDefault())) {
+                // LocaleData.MeasurementSystem.SI -> KMH
+                // LocaleData.MeasurementSystem.UK -> KMH
+                LocaleData.MeasurementSystem.US -> MPH
+                else -> KMH
             }
-        }
-
-        fun fromIntOrDefault(value: Int): WindSpeedUnit {
-            return fromInt(value) ?: KMH
         }
 
     }

@@ -1,6 +1,7 @@
 package io.github.xnovo3000.openweather.model
 
 import androidx.annotation.StringRes
+import com.ibm.icu.util.ULocale
 import io.github.xnovo3000.openweather.R
 
 enum class QueryLanguage(@StringRes val stringRes: Int, val queryName: String) {
@@ -17,23 +18,18 @@ enum class QueryLanguage(@StringRes val stringRes: Int, val queryName: String) {
 
     companion object {
 
-        private fun fromString(value: String): QueryLanguage? {
-            return when (value) {
-                "en" -> ENGLISH
-                "de" -> GERMAN
-                "fr" -> FRENCH
-                "es" -> SPANISH
-                "it" -> ITALIAN
-                "pt" -> PORTUGUESE
-                "ru" -> RUSSIAN
-                "tr" -> TURKISH
-                "hi" -> HINDI
-                else -> null
+        fun default(): QueryLanguage {
+            var current: ULocale? = ULocale.getDefault()
+            while (current != null) {
+                val language = QueryLanguage.values().firstOrNull {
+                    current!!.isO3Language.contains(it.queryName)
+                }
+                if (language != null) {
+                    return language
+                }
+                current = current.fallback
             }
-        }
-
-        fun fromStringOrDefault(value: String): QueryLanguage {
-            return fromString(value) ?: ENGLISH
+            return ENGLISH
         }
 
     }
