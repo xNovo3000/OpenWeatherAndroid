@@ -4,12 +4,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.xnovo3000.openweather.ui.component.ForecastTopAppBar
 import io.github.xnovo3000.openweather.viewmodel.ForecastLocationViewModel
 
@@ -26,7 +25,7 @@ fun ForecastScreenLocation(
         modifier = Modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
         topBar = {
             // Get location name
-            val locationName by viewModel.locationName.collectAsState()
+            val locationName by viewModel.locationName.collectAsStateWithLifecycle()
             // Build top bar
             ForecastTopAppBar(
                 locationName = locationName,

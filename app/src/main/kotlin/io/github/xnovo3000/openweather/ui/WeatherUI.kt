@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import io.github.xnovo3000.openweather.ui.screen.FindLocationScreen
 import io.github.xnovo3000.openweather.ui.screen.ForecastScreen
 import io.github.xnovo3000.openweather.ui.screen.ManageLocationsScreen
 import io.github.xnovo3000.openweather.ui.theme.*
@@ -14,7 +15,7 @@ import io.github.xnovo3000.openweather.ui.theme.*
 enum class WeatherRoute(val routeName: String) {
     FORECAST(routeName = "forecast"),
     MANAGE_LOCATIONS(routeName = "manage_locations"),
-    FIND_LOCATIONS(routeName = "add_locations"),
+    FIND_LOCATION(routeName = "find_location"),
     SETTINGS(routeName = "settings")
 }
 
@@ -43,6 +44,10 @@ fun WeatherUI() {
                 // Manage locations
                 composable(route = WeatherRoute.MANAGE_LOCATIONS.routeName) {
                     ManageLocationsScreen(navController = navController)
+                }
+                // Find location
+                composable(route = WeatherRoute.FIND_LOCATION.routeName) {
+                    FindLocationScreen(navController = navController)
                 }
             }
         }

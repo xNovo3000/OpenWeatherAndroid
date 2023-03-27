@@ -30,6 +30,12 @@
     <string name="manage_locations_current_position">Current position</string>
     <string name="manage_locations_add_location">Add location</string>
 
+    <!-- FindLocationScreen -->
+    <string name="find_location_title">Find location</string>
+    <string name="find_location_item_add">Add</string>
+    <string name="find_location_item_trailing">%1$s &#183; %2$s</string>
+    <string name="find_location_item_trailing_null">No info</string>
+
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>
     <string name="precipitation_unit_inch">inch</string>

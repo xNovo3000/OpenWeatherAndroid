@@ -1,10 +1,10 @@
 package io.github.xnovo3000.openweather.ui.screen
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -40,7 +40,7 @@ fun ForecastScreen(
         drawerState = drawerState,
         drawerContent = {
             // Get selected locations
-            val locations by viewModel.locations.collectAsState()
+            val locations by viewModel.locations.collectAsStateWithLifecycle()
             val backStackEntry by innerNavController.currentBackStackEntryAsState()
             // Update innerNavController in case of invalid route
             LaunchedEffect(locations, backStackEntry) {
@@ -50,7 +50,7 @@ fun ForecastScreen(
                 val locationIds = locations.map { it.id }
                 // Manage navigation when invalid
                 // 1: locations empty and destination not empty -> go to empty
-                // TODO: CHECK: 2: locations not empty but id not in list
+                // CHECK: 2: locations not empty but id not in list
                 when {
                     locationIds.isEmpty() && destination != ForecastScreenRoute.EMPTY.routeName -> {
                         innerNavController.navigateForecast(ForecastScreenRoute.EMPTY)

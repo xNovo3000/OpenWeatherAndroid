@@ -19,7 +19,7 @@ import io.github.xnovo3000.openweather.model.WeatherCode
 import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
 import java.time.LocalDateTime
 
-data class ManageLocationsLocationItem(
+data class ManagedLocationItem(
     val id: Long,
     val name: String,
     val lastUpdate: LocalDateTime,
@@ -30,7 +30,7 @@ data class ManageLocationsLocationItem(
 )
 
 @Composable
-fun ManageLocationsLocation(item: ManageLocationsLocationItem) {
+fun ManagedLocation(item: ManagedLocationItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -89,8 +89,8 @@ fun ManageLocationsLocation(item: ManageLocationsLocationItem) {
 private fun Preview() {
     WeatherTheme {
         Surface {
-            ManageLocationsLocation(
-                item = ManageLocationsLocationItem(
+            ManagedLocation(
+                item = ManagedLocationItem(
                     id = 1,
                     name = "New York",
                     lastUpdate = LocalDateTime.now(),

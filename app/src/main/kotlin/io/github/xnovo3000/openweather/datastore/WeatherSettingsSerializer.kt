@@ -1,6 +1,8 @@
 package io.github.xnovo3000.openweather.datastore
 
 import androidx.datastore.core.Serializer
+import com.ibm.icu.util.LocaleData
+import com.ibm.icu.util.ULocale
 import io.github.xnovo3000.openweather.model.QueryLanguage
 import io.github.xnovo3000.openweather.model.TemperatureUnit
 import io.github.xnovo3000.openweather.model.WindSpeedUnit
@@ -17,9 +19,29 @@ object WeatherSettingsSerializer : Serializer<WeatherSettings> {
 
     override val defaultValue: WeatherSettings
         get() = WeatherSettings(
-            queryLanguage = QueryLanguage.default(),
-            temperatureUnit = TemperatureUnit.default(),
-            windSpeedUnit = WindSpeedUnit.default()
+            queryLanguage = QueryLanguage.values().let { languages ->
+                var current: ULocale? = ULocale.getDefault()
+                var found: QueryLanguage? = null
+                while (current != null && found == null) {
+                    found = languages.firstOrNull {
+                        current!!.isO3Language.contains(it.queryName)
+                    }
+                    current = current.fallback
+                }
+                found ?: QueryLanguage.ENGLISH
+            },
+            temperatureUnit = when (LocaleData.getMeasurementSystem(ULocale.getDefault())) {
+                // LocaleData.MeasurementSystem.SI -> CELSIUS
+                // LocaleData.MeasurementSystem.UK -> CELSIUS
+                LocaleData.MeasurementSystem.US -> TemperatureUnit.FAHRENHEIT
+                else -> TemperatureUnit.CELSIUS
+            },
+            windSpeedUnit = when (LocaleData.getMeasurementSystem(ULocale.getDefault())) {
+                // LocaleData.MeasurementSystem.SI -> KMH
+                // LocaleData.MeasurementSystem.UK -> KMH
+                LocaleData.MeasurementSystem.US -> WindSpeedUnit.MPH
+                else -> WindSpeedUnit.KMH
+            }
         )
 
     @ExperimentalSerializationApi

@@ -10,16 +10,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
 import io.github.xnovo3000.openweather.ui.component.ManageLocationsFab
 import io.github.xnovo3000.openweather.ui.component.ManageLocationsTopBar
-import io.github.xnovo3000.openweather.ui.item.ManageLocationsLocation
+import io.github.xnovo3000.openweather.ui.item.ManagedLocation
 import io.github.xnovo3000.openweather.ui.navigateWeather
 import io.github.xnovo3000.openweather.viewmodel.ManageLocationsViewModel
 
@@ -44,12 +44,12 @@ fun ManageLocationsScreen(
         },
         floatingActionButton = {
             ManageLocationsFab(expanded = true) {
-                navController.navigateWeather(WeatherRoute.FIND_LOCATIONS)
+                navController.navigateWeather(WeatherRoute.FIND_LOCATION)
             }
         }
     ) { paddingValues ->
         // Listen state
-        val locations by viewModel.locations.collectAsState()
+        val locations by viewModel.locations.collectAsStateWithLifecycle()
         // Build sublist
         LazyColumn(
             contentPadding = PaddingValues(
@@ -62,7 +62,7 @@ fun ManageLocationsScreen(
                 items = locations,
                 key = { it.id }
             ) {
-                ManageLocationsLocation(item = it)
+                ManagedLocation(item = it)
             }
         }
     }

@@ -26,7 +26,7 @@ fun ForecastScreenEmpty(
         ForecastEmptyContent(
             paddingValues = paddingValues,
             onAddLocationClick = {
-                navController.navigateWeather(WeatherRoute.FIND_LOCATIONS)
+                navController.navigateWeather(WeatherRoute.FIND_LOCATION)
             }
         )
     }

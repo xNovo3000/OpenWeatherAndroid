@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.xnovo3000.openweather.datastore.WeatherSettings
 import io.github.xnovo3000.openweather.room.WeatherDatabase
-import io.github.xnovo3000.openweather.ui.item.ManageLocationsLocationItem
+import io.github.xnovo3000.openweather.ui.item.ManagedLocationItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -27,7 +27,7 @@ class ManageLocationsViewModel @Inject constructor(
     val locations = combine(locationsFlow, temperatureUnitFlow) { locations, temperatureUnit ->
         withContext(Dispatchers.Default) {
             locations.map {
-                ManageLocationsLocationItem(
+                ManagedLocationItem(
                     id = it.id,
                     name = it.name,
                     lastUpdate = it.lastUpdate,
