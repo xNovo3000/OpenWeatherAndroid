@@ -49,8 +49,6 @@ fun ForecastScreen(
                 val id = backStackEntry?.arguments?.getLong("id", -1L)
                 val locationIds = locations.map { it.id }
                 // Manage navigation when invalid
-                // 1: locations empty and destination not empty -> go to empty
-                // CHECK: 2: locations not empty but id not in list
                 when {
                     locationIds.isEmpty() && destination != ForecastScreenRoute.EMPTY.routeName -> {
                         innerNavController.navigateForecast(ForecastScreenRoute.EMPTY)

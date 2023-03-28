@@ -36,6 +36,7 @@
     <string name="find_location_item_trailing">%1$s &#183; %2$s</string>
     <string name="find_location_item_trailing_null">No info</string>
     <string name="find_location_current">Current location</string>
+    <string name="find_location_permission_required">Location permission is required</string>
 
     <!-- PrecipitationUnit -->
     <string name="precipitation_unit_mm">mm</string>

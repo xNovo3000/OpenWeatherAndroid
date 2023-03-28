@@ -2,6 +2,8 @@ package io.github.xnovo3000.openweather.module
 
 import android.content.Context
 import androidx.room.Room
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import dagger.Module
@@ -52,6 +54,12 @@ object ApplicationModule {
         return Room
             .databaseBuilder(context, WeatherDatabase::class.java, "weather-database")
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesFusedLocationProviderClient(@ApplicationContext context: Context): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(context)
     }
 
 }

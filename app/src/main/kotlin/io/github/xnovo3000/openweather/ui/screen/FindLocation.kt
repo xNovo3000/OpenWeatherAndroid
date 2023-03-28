@@ -3,25 +3,19 @@ package io.github.xnovo3000.openweather.ui.screen
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import io.github.xnovo3000.openweather.R
+import io.github.xnovo3000.openweather.ui.component.FindLocationContent
 import io.github.xnovo3000.openweather.ui.component.FindLocationTopBar
-import io.github.xnovo3000.openweather.ui.item.CurrentLocation
-import io.github.xnovo3000.openweather.ui.item.GeocodedLocation
-import io.github.xnovo3000.openweather.ui.item.GeocodedLocationItem
 import io.github.xnovo3000.openweather.viewmodel.FindLocationViewModel
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
 @Composable
@@ -29,10 +23,14 @@ fun FindLocationScreen(
     navController: NavController,
     viewModel: FindLocationViewModel = hiltViewModel()
 ) {
-    // Screen state
+    // Snackbar state
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    // TopBar scroll state
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     // Build screen
     Scaffold(
+        modifier = Modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
         topBar = {
             // Listen query
             var query by remember { mutableStateOf("") }
@@ -42,46 +40,37 @@ fun FindLocationScreen(
             FindLocationTopBar(
                 query = query,
                 onQueryChange = { query = it },
-                onNavigationIconClick = {
-                    navController.popBackStack()
-                },
+                onNavigationIconClick = { navController.popBackStack() },
                 scrollBehavior = scrollBehavior
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
+        // Get values
+        val permissionRequiredRationale = stringResource(id = R.string.find_location_permission_required)
         // Listen state
         val geocodedLocations by viewModel.geocodedLocationItems.collectAsStateWithLifecycle()
         val isCurrentLocationAlreadyPresent by viewModel.isCurrentLocationAlreadyPresent.collectAsStateWithLifecycle()
-        val addCurrentLocationCounter = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
+        val addCurrentLocationLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission()
+        ) { result ->
+            if (result) {
                 viewModel.insertCurrentLocation()
             } else {
-                // TODO: Add snackbar to indicate that permission is required
+                coroutineScope.launch { snackbarHostState.showSnackbar(permissionRequiredRationale) }
             }
         }
         // Build
-        LazyColumn(
-            contentPadding = PaddingValues(
-                top = paddingValues.calculateTopPadding(),
-                bottom = paddingValues.calculateBottomPadding() + WindowInsets.navigationBars
-                    .asPaddingValues().calculateBottomPadding()
-            )
-        ) {
-            // Build current location
-            item(key = 0) {
-                CurrentLocation(isAlreadyPresent = isCurrentLocationAlreadyPresent) {
-                    addCurrentLocationCounter.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-                }
-            }
-            // Build locations
-            items(
-                items = geocodedLocations,
-                key = { it.id }
-            ) {
-                GeocodedLocation(item = it) {
-                    viewModel.insertLocation(it)
-                }
-            }
-        }
+        FindLocationContent(
+            geocodedLocations = geocodedLocations,
+            isCurrentLocationAlreadyPresent = isCurrentLocationAlreadyPresent,
+            onAddCurrentLocationClick = {
+                addCurrentLocationLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+            },
+            onAddLocationClick = {
+                viewModel.insertLocation(it)
+            },
+            paddingValues = paddingValues
+        )
     }
 }
