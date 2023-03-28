@@ -12,6 +12,7 @@ import androidx.work.WorkerParameters
 import androidx.work.hasKeyWithValueOfType
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.Tasks
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.github.xnovo3000.openweather.model.WeatherCode
@@ -30,6 +31,11 @@ class UpdateForecastWorker @AssistedInject constructor(
     private val forecastApi: ForecastApi,
     private val fusedLocationProviderClient: FusedLocationProviderClient
 ) : CoroutineWorker(appContext, workerParams) {
+
+    companion object {
+        const val TAG_ONE_TIME = "UpdateForecastWorker_ONE"
+        const val TAG_PERIODIC = "UpdateForecastWorker_PERIODIC"
+    }
 
     @SuppressLint("MissingPermission")
     override suspend fun doWork(): Result {
@@ -50,7 +56,7 @@ class UpdateForecastWorker @AssistedInject constructor(
                 return Result.failure()
             }
             // Get current location
-            fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_LOW_POWER, null).result
+            Tasks.await(fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_LOW_POWER, null))
                 ?.let { currentLocation ->
                     // Update location entity if there is a location
                     location = location.copy(
@@ -122,8 +128,8 @@ class UpdateForecastWorker @AssistedInject constructor(
     private fun getWindDirection(direction: Int): WindDirection {
         return when (direction) {
             in 23..67 -> WindDirection.NORTH_EAST
-            in 66..112 -> WindDirection.EAST
-            in 111..157 -> WindDirection.SOUTH_EAST
+            in 68..112 -> WindDirection.EAST
+            in 113..157 -> WindDirection.SOUTH_EAST
             in 158..202 -> WindDirection.SOUTH
             in 203..247 -> WindDirection.SOUTH_WEST
             in 248..292 -> WindDirection.WEST
