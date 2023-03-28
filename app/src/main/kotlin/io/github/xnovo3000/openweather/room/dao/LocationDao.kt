@@ -18,9 +18,19 @@ interface LocationDao {
     fun listenByLocationIdWithForecast(id: Long): Flow<LocationWithForecasts?>
 
     @Query("select max(sequence) from Location")
-    suspend fun getLocationGroupByMaxSequence(): Int?
+    suspend fun getSequenceGroupByMaxSequence(): Int?
+
+    @RewriteQueriesToDropUnusedColumns
+    @Query("select id as value, min(sequence) from Location")
+    suspend fun getIdGroupByMinSequence(): Long?
+
+    @Query("select * from Location where id = :id")
+    suspend fun getById(id: Long): Location?
 
     @Insert
     suspend fun insert(location: Location)
+
+    @Update
+    suspend fun update(location: Location)
 
 }

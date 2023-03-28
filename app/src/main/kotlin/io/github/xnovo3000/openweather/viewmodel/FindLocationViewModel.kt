@@ -58,7 +58,7 @@ class FindLocationViewModel @Inject constructor(
                 latitude = 0.0,
                 longitude = 0.0,
                 lastUpdate = LocalDateTime.MIN,
-                sequence = (weatherDatabase.getLocationDao().getLocationGroupByMaxSequence() ?: 0) + 1
+                sequence = (weatherDatabase.getLocationDao().getSequenceGroupByMaxSequence() ?: 0) + 1
             )
             // Insert into database
             weatherDatabase.getLocationDao().insert(location)
@@ -75,7 +75,7 @@ class FindLocationViewModel @Inject constructor(
                 latitude = item.latitude,
                 longitude = item.longitude,
                 lastUpdate = LocalDateTime.MIN,
-                sequence = (weatherDatabase.getLocationDao().getLocationGroupByMaxSequence() ?: 0) + 1
+                sequence = (weatherDatabase.getLocationDao().getSequenceGroupByMaxSequence() ?: 0) + 1
             )
             // Insert into database
             weatherDatabase.getLocationDao().insert(location)
