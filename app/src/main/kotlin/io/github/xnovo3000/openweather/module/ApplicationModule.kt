@@ -13,7 +13,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.components.SingletonComponent
 import io.github.xnovo3000.openweather.datastore.WeatherSettings
 import io.github.xnovo3000.openweather.datastore.WeatherSettingsSerializer
@@ -63,7 +62,7 @@ object ApplicationModule {
     }
 
     @Provides
-    @ActivityRetainedScoped
+    @Singleton
     fun providesWeatherSettings(@ApplicationContext context: Context): DataStore<WeatherSettings> {
         return DataStoreFactory.create(
             serializer = WeatherSettingsSerializer,

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import io.github.xnovo3000.openweather.R
 import io.github.xnovo3000.openweather.model.TemperatureUnit
 import io.github.xnovo3000.openweather.model.WeatherCode
+import io.github.xnovo3000.openweather.model.getIcon
 import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
 import java.time.LocalDateTime
 

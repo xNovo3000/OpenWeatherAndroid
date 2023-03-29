@@ -33,7 +33,9 @@ class ManageLocationsViewModel @Inject constructor(
                     lastUpdate = it.lastUpdate,
                     temperature = it.temperature,
                     weatherCode = it.weatherCode,
-                    isNight = it.lastUpdate < it.sunrise || it.lastUpdate > it.sunset,
+                    isNight = if (it.sunrise != null && it.sunset != null) {
+                        it.lastUpdate < it.sunrise || it.lastUpdate > it.sunset
+                    } else false,
                     temperatureUnit = temperatureUnit
                 )
             }

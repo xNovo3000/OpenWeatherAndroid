@@ -33,8 +33,8 @@ class UpdateForecastWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParams) {
 
     companion object {
-        const val TAG_ONE_TIME = "UpdateForecastWorker_ONE"
-        const val TAG_PERIODIC = "UpdateForecastWorker_PERIODIC"
+        const val TAG_ONE_TIME = "io.github.xnovo3000.work.onetime.UpdateForecastWorker"
+        const val TAG_PERIODIC = "io.github.xnovo3000.work.periodic.UpdateForecastWorker"
     }
 
     @SuppressLint("MissingPermission")

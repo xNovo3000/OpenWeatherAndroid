@@ -21,7 +21,7 @@ fun CurrentLocation(
         trailingContent = {
             FilledTonalButton(
                 onClick = onAddClick,
-                enabled = isAlreadyPresent
+                enabled = !isAlreadyPresent
             ) {
                 Text(text = stringResource(R.string.find_location_item_add))
             }

@@ -11,7 +11,6 @@ enum class WeatherCode(
     @StringRes val displayName: Int,
     val wmoAcceptedCodes: Set<Int>
 ) {
-
     CLEAR(
         day = R.drawable.wc_clear_day,
         night = R.drawable.wc_clear_night,
@@ -48,41 +47,8 @@ enum class WeatherCode(
         day = R.drawable.wc_thunderstorm,
         displayName = R.string.weather_code_thunderstorm,
         wmoAcceptedCodes = hashSetOf(95, 96, 99)
-    );
-
-    @DrawableRes
-    fun getIcon(sunrise: LocalDateTime, sunset: LocalDateTime, now: LocalDateTime): Int {
-        return if (now > sunrise && now < sunset) {
-            day
-        } else {
-            night
-        }
-    }
-
-    @DrawableRes
-    fun getIcon(isNightTime: Boolean): Int {
-        return if (isNightTime) night else day
-    }
-
-    companion object {
-
-        private fun fromInt(value: Int): WeatherCode? {
-            return when (value) {
-                0 -> CLEAR
-                1 -> PARTLY_CLOUDY
-                2 -> CLOUDY
-                3 -> FOGGY
-                4 -> RAINY
-                5 -> SNOWY
-                6 -> THUNDERSTORM
-                else -> null
-            }
-        }
-
-        fun fromIntOrDefault(value: Int): WeatherCode {
-            return fromInt(value) ?: CLEAR
-        }
-
-    }
-
+    )
 }
+
+@DrawableRes
+fun WeatherCode.getIcon(isNightTime: Boolean): Int = if (isNightTime) night else day

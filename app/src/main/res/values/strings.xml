@@ -4,6 +4,14 @@
     <!-- Manifest -->
     <string name="app_name">Open Weather</string>
 
+    <!-- AddLocationScreen -->
+    <string name="add_location_top_bar_title">Search…</string>
+
+    <!-- Forecast2Screen -->
+    <string name="forecast_2_top_bar_headline">Search locations</string>
+    <string name="forecast_2_top_bar_action_settings">Settings</string>
+    <string name="forecast_2_top_bar_action_info">Info</string>
+
     <!-- ForecastScreen -->
     <string name="forecast_drawer_title">Weather</string>
     <string name="forecast_drawer_locations">Locations</string>

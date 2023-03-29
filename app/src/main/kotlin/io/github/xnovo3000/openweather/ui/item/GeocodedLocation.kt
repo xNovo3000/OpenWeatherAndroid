@@ -1,6 +1,8 @@
 package io.github.xnovo3000.openweather.ui.item
 
 import android.content.res.Configuration
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -42,11 +44,14 @@ fun GeocodedLocation(
             )
         },
         trailingContent = {
-            FilledTonalButton(
+            FilledIconButton(
                 onClick = onAddClick,
                 enabled = !item.isAlreadyPresent
             ) {
-                Text(text = stringResource(R.string.find_location_item_add))
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = null
+                )
             }
         }
     )
