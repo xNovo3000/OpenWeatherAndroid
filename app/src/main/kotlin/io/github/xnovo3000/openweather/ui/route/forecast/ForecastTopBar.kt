@@ -67,7 +67,7 @@ fun ForecastTopBar(
                 )
                 Text(
                     modifier = Modifier.weight(1F),
-                    text = stringResource(id = R.string.forecast_2_top_bar_headline),
+                    text = stringResource(id = R.string.forecast_top_bar_headline),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -99,7 +99,7 @@ fun ForecastTopBar(
                             text = {
                                 Text(
                                     text = stringResource(
-                                        id = R.string.forecast_2_top_bar_action_settings
+                                        id = R.string.forecast_top_bar_action_settings
                                     )
                                 )
                             },
@@ -112,7 +112,7 @@ fun ForecastTopBar(
                             text = {
                                 Text(
                                     text = stringResource(
-                                        id = R.string.forecast_2_top_bar_action_info
+                                        id = R.string.forecast_top_bar_action_info
                                     )
                                 )
                             },

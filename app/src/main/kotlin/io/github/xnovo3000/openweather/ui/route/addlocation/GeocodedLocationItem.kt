@@ -33,12 +33,12 @@ fun GeocodedLocationItemView(
         supportingText = {
             Text(
                 text = stringResource(
-                    id = R.string.find_location_item_trailing,
+                    id = R.string.add_location_item_support,
                     item.country ?: stringResource(
-                        id = R.string.find_location_item_trailing_null
+                        id = R.string.add_location_item_no_info
                     ),
                     item.admin1 ?: stringResource(
-                        id = R.string.find_location_item_trailing_null
+                        id = R.string.add_location_item_no_info
                     )
                 )
             )

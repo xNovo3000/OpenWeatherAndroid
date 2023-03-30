@@ -39,7 +39,7 @@ fun ForecastLocationHour(item: ForecastLocationHourItem) {
     ) {
         Text(
             text = stringResource(
-                id = R.string.forecast_location_hour_time,
+                id = R.string.forecast_content_location_hour_time,
                 item.dateTime.atZone(ZoneId.systemDefault()).toEpochSecond()
             ),
             style = MaterialTheme.typography.bodyMedium
@@ -55,7 +55,7 @@ fun ForecastLocationHour(item: ForecastLocationHourItem) {
         Spacer(modifier = Modifier.height(2.dp))
         Text(
             text = stringResource(
-                id = R.string.forecast_location_hour_temperature,
+                id = R.string.forecast_content_location_hour_temperature,
                 item.temperature
             ),
             style = MaterialTheme.typography.bodyLarge
@@ -72,7 +72,7 @@ fun ForecastLocationHour(item: ForecastLocationHourItem) {
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(
-                    id = R.string.forecast_location_hour_wind,
+                    id = R.string.forecast_content_location_hour_wind,
                     item.windSpeed, stringResource(
                         id = item.windSpeedUnit.stringRes
                     )

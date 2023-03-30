@@ -18,7 +18,7 @@ fun CurrentLocationItemView(
 ) {
     ListItem(
         headlineText = {
-            Text(text = stringResource(id = R.string.find_location_current))
+            Text(text = stringResource(id = R.string.add_location_item_current_position))
         },
         trailingContent = {
             FilledTonalIconButton(

@@ -57,7 +57,7 @@ object ApplicationModule {
     @Singleton
     fun providesWeatherDatabase(@ApplicationContext context: Context): WeatherDatabase {
         return Room
-            .databaseBuilder(context, WeatherDatabase::class.java, "weather-database")
+            .databaseBuilder(context, WeatherDatabase::class.java, "io.github.xnovo3000.openweather.data.room.WeatherDatabase")
             .build()
     }
 

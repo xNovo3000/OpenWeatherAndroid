@@ -43,7 +43,7 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
         Text(
             modifier = Modifier.weight(1F),
             text = stringResource(
-                id = R.string.forecast_location_day_date,
+                id = R.string.forecast_content_location_day_date,
                 item.date.atTime(0, 0)
                     .atZone(ZoneId.systemDefault()).toEpochSecond()
             ),
@@ -51,7 +51,7 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
         )
         Text(
             text = stringResource(
-                id = R.string.forecast_location_day_precipitation_probability,
+                id = R.string.forecast_content_location_day_precipitation_probability,
                 item.precipitationProbability
             ),
             style = MaterialTheme.typography.bodyMedium
@@ -70,7 +70,7 @@ fun ForecastLocationDay(item: ForecastLocationDayItem) {
         ) {
             Text(
                 text = stringResource(
-                    id = R.string.forecast_location_day_temperature,
+                    id = R.string.forecast_content_location_day_temperature,
                     item.temperatureMax, item.temperatureMin
                 ),
                 style = MaterialTheme.typography.bodyLarge

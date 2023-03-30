@@ -21,7 +21,7 @@ fun ForecastContentEmpty(paddingValues: PaddingValues) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(id = R.string.forecast_2_content_empty_rationale),
+            text = stringResource(id = R.string.forecast_content_empty_rationale),
             style = MaterialTheme.typography.labelLarge
         )
     }

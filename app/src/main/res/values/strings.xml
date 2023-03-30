@@ -9,50 +9,26 @@
     <string name="add_location_dialog_title">Change language</string>
     <string name="add_location_dialog_dismiss">Dismiss</string>
     <string name="add_location_dialog_confirm">Confirm</string>
-
-    <!-- Forecast2Screen -->
-    <string name="forecast_2_top_bar_headline">Search locations</string>
-    <string name="forecast_2_top_bar_action_settings">Settings</string>
-    <string name="forecast_2_top_bar_action_info">Info</string>
-    <string name="forecast_2_content_empty_rationale">There are no locations</string>
+    <string name="add_location_item_current_position">Current position</string>
+    <string name="add_location_item_support">%1$s &#183; %2$s</string>
+    <string name="add_location_item_no_info">No info</string>
 
     <!-- ForecastScreen -->
-    <string name="forecast_drawer_title">Weather</string>
-    <string name="forecast_drawer_locations">Locations</string>
-    <string name="forecast_drawer_more">More</string>
-    <string name="forecast_drawer_manage_locations">Manage locations</string>
-    <string name="forecast_drawer_settings">Settings</string>
-    <string name="forecast_drawer_current_position">Current position</string>
-    <string name="forecast_drawer_temperature">%d°</string>
-    <string name="forecast_drawer_temperature_unknown">--°</string>
-    <string name="forecast_top_bar_no_location">Weather</string>
-    <string name="forecast_empty_content_rationale">There are no locations</string>
-    <string name="forecast_empty_content_add_location">Add one</string>
-    <string name="forecast_location_daily_title">Daily forecast</string>
-    <string name="forecast_location_day_date">%1$ta %1$tb %1$td</string>
-    <string name="forecast_location_day_precipitation_probability">%d%%</string>
-    <string name="forecast_location_day_temperature">%1$d°/%2$d°</string>
-    <string name="forecast_location_hourly_title">Hourly forecast</string>
-    <string name="forecast_location_hour_temperature">%d°</string>
-    <string name="forecast_location_hour_time">%1$tH:%1$tM</string>
-    <string name="forecast_location_hour_wind">%1$d %2$s</string>
+    <string name="forecast_top_bar_headline">Search locations</string>
+    <string name="forecast_top_bar_action_settings">Settings</string>
+    <string name="forecast_top_bar_action_info">Info</string>
+    <string name="forecast_content_empty_rationale">There are no locations</string>
+    <string name="forecast_content_location_day_date">%1$ta %1$tb %1$td</string>
+    <string name="forecast_content_location_day_precipitation_probability">%d%%</string>
+    <string name="forecast_content_location_day_temperature">%d°</string>
+    <string name="forecast_content_location_hour_time">%1$tH:%1$tM</string>
+    <string name="forecast_content_location_hour_temperature">%d°</string>
+    <string name="forecast_content_location_hour_wind">%1$d %2$s</string>
 
     <!-- ManageLocationsScreen -->
     <string name="manage_locations_title">Manage locations</string>
     <string name="manage_locations_current_position">Current position</string>
     <string name="manage_locations_add_location">Add location</string>
-
-    <!-- FindLocationScreen -->
-    <string name="find_location_title">Find location</string>
-    <string name="find_location_item_add">Add</string>
-    <string name="find_location_item_trailing">%1$s &#183; %2$s</string>
-    <string name="find_location_item_trailing_null">No info</string>
-    <string name="find_location_current">Current location</string>
-    <string name="find_location_permission_required">Location permission is required</string>
-
-    <!-- PrecipitationUnit -->
-    <string name="precipitation_unit_mm">mm</string>
-    <string name="precipitation_unit_inch">inch</string>
 
     <!-- QueryLanguage -->
     <string name="query_language_en">English</string>
