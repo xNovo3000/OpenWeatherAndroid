@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.EditLocationAlt
+import androidx.compose.material.icons.rounded.LocationCity
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.xnovo3000.openweather.R
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 
 @ExperimentalMaterial3Api
 @Composable
@@ -53,7 +53,8 @@ fun Forecast2TopBar(
             Row(
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .heightIn(min = 52.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -61,20 +62,20 @@ fun Forecast2TopBar(
                         .padding(12.dp)
                         .size(24.dp),
                     imageVector = Icons.Rounded.Search,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     modifier = Modifier.weight(1F),
                     text = stringResource(id = R.string.forecast_2_top_bar_headline),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 IconButton(onClick = onManageLocationsClick) {
                     Icon(
-                        modifier = Modifier
-                            .padding(12.dp)
-                            .size(24.dp),
-                        imageVector = Icons.Rounded.EditLocationAlt,
-                        contentDescription = null
+                        imageVector = Icons.Rounded.LocationCity,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
                 // Dropdown state
@@ -84,11 +85,9 @@ fun Forecast2TopBar(
                     // Three dots button
                     IconButton(onClick = { expanded = true }) {
                         Icon(
-                            modifier = Modifier
-                                .padding(12.dp)
-                                .size(24.dp),
                             imageVector = Icons.Rounded.MoreVert,
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     // Dropdown

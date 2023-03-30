@@ -4,9 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.xnovo3000.openweather.datastore.WeatherSettings
-import io.github.xnovo3000.openweather.model.TemperatureUnit
-import io.github.xnovo3000.openweather.room.WeatherDatabase
+import io.github.xnovo3000.openweather.data.datastore.WeatherSettings
+import io.github.xnovo3000.openweather.data.room.WeatherDatabase
 import io.github.xnovo3000.openweather.ui.component.DrawerLocationItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,7 +21,7 @@ class ForecastViewModel @Inject constructor(
     settings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
-    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecastOrderBySequenceAsc()
     private val temperatureUnitFlow = settings.data.map { it.temperatureUnit }
 
     val locations = combine(locationsFlow, temperatureUnitFlow) { locationList, temperatureUnit ->

@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import io.github.xnovo3000.openweather.R
-import io.github.xnovo3000.openweather.model.WeatherCode
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.data.model.WeatherCode
+import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 
 data class DrawerLocationItem(
     val id: Long,

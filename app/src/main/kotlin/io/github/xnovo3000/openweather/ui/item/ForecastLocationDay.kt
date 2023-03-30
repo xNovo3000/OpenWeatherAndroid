@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.xnovo3000.openweather.R
-import io.github.xnovo3000.openweather.model.WeatherCode
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.data.model.WeatherCode
+import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 import java.time.LocalDate
 import java.time.ZoneId
 

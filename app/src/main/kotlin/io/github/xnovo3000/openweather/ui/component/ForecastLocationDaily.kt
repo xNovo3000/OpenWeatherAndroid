@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.xnovo3000.openweather.R
-import io.github.xnovo3000.openweather.model.WeatherCode
+import io.github.xnovo3000.openweather.data.model.WeatherCode
 import io.github.xnovo3000.openweather.ui.item.ForecastLocationDay
 import io.github.xnovo3000.openweather.ui.item.ForecastLocationDayItem
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 import java.time.LocalDate
 
 @Composable
@@ -55,7 +55,7 @@ private fun Preview() {
                 items = List(4) {
                     ForecastLocationDayItem(
                         date = now.plusDays(it + 0L),
-                        weatherCode = WeatherCode.fromIntOrDefault(it),
+                        weatherCode = WeatherCode.values()[it],
                         temperatureMin = 9,
                         temperatureMax = 21,
                         precipitationProbability = it + 20

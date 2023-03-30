@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.xnovo3000.openweather.R
-import io.github.xnovo3000.openweather.ui.theme.WeatherTheme
+import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 
 @ExperimentalMaterial3Api
 @Composable

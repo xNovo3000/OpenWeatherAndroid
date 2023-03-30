@@ -1,0 +1,42 @@
+package io.github.xnovo3000.openweather.ui.route.managelocations
+
+import androidx.datastore.core.DataStore
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.xnovo3000.openweather.data.datastore.WeatherSettings
+import io.github.xnovo3000.openweather.data.room.WeatherDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@HiltViewModel
+class ManageLocationsViewModel @Inject constructor(
+    weatherDatabase: WeatherDatabase,
+    settings: DataStore<WeatherSettings>
+) : ViewModel() {
+
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecastOrderBySequenceAsc()
+
+    val locations = combine(locationsFlow, settings.data) { locations, settingsData ->
+        withContext(Dispatchers.Default) {
+            locations.map {
+                ManagedLocationItem(
+                    id = it.id,
+                    name = it.name,
+                    lastUpdate = it.lastUpdate,
+                    temperature = it.temperature,
+                    weatherCode = it.weatherCode,
+                    isNight = if (it.sunrise != null && it.sunset != null) {
+                        it.lastUpdate < it.sunrise || it.lastUpdate > it.sunset
+                    } else false,
+                    temperatureUnit = settingsData.temperatureUnit
+                )
+            }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+}

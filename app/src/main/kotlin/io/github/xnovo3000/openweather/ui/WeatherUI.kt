@@ -9,13 +9,14 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.github.xnovo3000.openweather.ui.screen.FindLocationScreen
 import io.github.xnovo3000.openweather.ui.screen.ForecastScreen
-import io.github.xnovo3000.openweather.ui.screen.ManageLocationsScreen
-import io.github.xnovo3000.openweather.ui.theme.*
+import io.github.xnovo3000.openweather.ui.route.managelocations.ManageLocationsScreen
+import io.github.xnovo3000.openweather.ui.core.*
 
 enum class WeatherRoute(val routeName: String) {
     FORECAST(routeName = "forecast"),
     MANAGE_LOCATIONS(routeName = "manage_locations"),
     FIND_LOCATION(routeName = "find_location"),
+    ADD_LOCATION(routeName = "add_location"),
     SETTINGS(routeName = "settings")
 }
 

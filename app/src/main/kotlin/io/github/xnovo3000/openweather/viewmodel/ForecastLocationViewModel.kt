@@ -5,9 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.xnovo3000.openweather.datastore.WeatherSettings
-import io.github.xnovo3000.openweather.model.TemperatureUnit
-import io.github.xnovo3000.openweather.room.WeatherDatabase
+import io.github.xnovo3000.openweather.data.datastore.WeatherSettings
+import io.github.xnovo3000.openweather.data.room.WeatherDatabase
 import io.github.xnovo3000.openweather.ui.component.ForecastLocationCurrentItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted

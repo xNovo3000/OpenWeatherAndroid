@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.xnovo3000.openweather.datastore.WeatherSettings
-import io.github.xnovo3000.openweather.retrofit.api.GeocodingApi
-import io.github.xnovo3000.openweather.retrofit.dto.GeocodedLocationDto
-import io.github.xnovo3000.openweather.room.WeatherDatabase
-import io.github.xnovo3000.openweather.room.entity.Location
+import io.github.xnovo3000.openweather.data.datastore.WeatherSettings
+import io.github.xnovo3000.openweather.api.retrofit.api.GeocodingApi
+import io.github.xnovo3000.openweather.api.retrofit.dto.GeocodedLocationDto
+import io.github.xnovo3000.openweather.data.room.WeatherDatabase
+import io.github.xnovo3000.openweather.data.room.entity.Location
 import io.github.xnovo3000.openweather.ui.item.GeocodedLocationItem
-import io.github.xnovo3000.openweather.worker.UpdateForecastWorker
+import io.github.xnovo3000.openweather.background.worker.UpdateForecastWorker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.io.IOException
@@ -27,7 +27,7 @@ class FindLocationViewModel @Inject constructor(
     private val workManager: WorkManager
 ) : ViewModel() {
 
-    private val locationIdsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
+    private val locationIdsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecastOrderBySequenceAsc()
         .map { locations -> locations.map { it.id } }
     private val geocodedLocationsFlow = MutableStateFlow(emptyList<GeocodedLocationDto>())
 
