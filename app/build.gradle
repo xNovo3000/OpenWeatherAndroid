@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.hilt:hilt-work:1.0.0'
     // DataStore
     implementation 'androidx.datastore:datastore:1.0.0'
+    // DataStore - Deserialization add-on
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
     // Google Play Services
     implementation 'com.google.android.gms:play-services-location:21.0.1'
@@ -68,6 +69,7 @@ dependencies {
     implementation 'androidx.compose.ui:ui:1.4.0'
     // Jetpack Compose - Material You
     implementation 'androidx.compose.material:material-icons-extended:1.4.0'
+    implementation 'androidx.compose.material:material:1.4.0'
     implementation 'androidx.compose.material3:material3:1.0.1'
     // Jetpack Compose - Preview
     implementation 'androidx.compose.ui:ui-tooling:1.4.0'

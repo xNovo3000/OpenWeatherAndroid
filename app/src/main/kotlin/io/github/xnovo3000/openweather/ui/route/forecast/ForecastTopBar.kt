@@ -1,4 +1,4 @@
-package io.github.xnovo3000.openweather.ui.component
+package io.github.xnovo3000.openweather.ui.route.forecast
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun Forecast2TopBar(
+fun ForecastTopBar(
     onSearchClick: () -> Unit,
     onManageLocationsClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -135,7 +135,7 @@ fun Forecast2TopBar(
 private fun Preview() {
     WeatherTheme {
         Surface {
-            Forecast2TopBar(
+            ForecastTopBar(
                 onSearchClick = {},
                 onManageLocationsClick = {},
                 onSettingsClick = {},

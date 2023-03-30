@@ -30,7 +30,7 @@ data class ManagedLocationItem(
 )
 
 @Composable
-fun ManagedLocation(item: ManagedLocationItem) {
+fun ManagedLocationItemView(item: ManagedLocationItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -89,7 +89,7 @@ fun ManagedLocation(item: ManagedLocationItem) {
 private fun Preview() {
     WeatherTheme {
         Surface {
-            ManagedLocation(
+            ManagedLocationItemView(
                 item = ManagedLocationItem(
                     id = 1,
                     name = "New York",

@@ -1,24 +1,25 @@
-package io.github.xnovo3000.openweather.ui.route.managelocations
+package io.github.xnovo3000.openweather.ui.route.forecast
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
 import io.github.xnovo3000.openweather.ui.core.withNavigationBarPadding
 import io.github.xnovo3000.openweather.ui.navigateWeather
+import io.github.xnovo3000.openweather.viewmodel.Forecast2ViewModel
 
+@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
-fun ManageLocationsScreen(
+fun ForecastScreen(
     navController: NavController,
-    viewModel: ManageLocationsViewModel = hiltViewModel()
+    viewModel: ForecastViewModel = hiltViewModel()
 ) {
     // Screen state
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -26,22 +27,26 @@ fun ManageLocationsScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
         topBar = {
-            ManageLocationsTopBar(
-                scrollBehavior = scrollBehavior,
-                onNavigationIconClick = { navController.popBackStack() }
+            ForecastTopBar(
+                onSearchClick = {
+                    navController.navigateWeather(WeatherRoute.FIND_LOCATION)
+                },
+                onManageLocationsClick = {
+                    navController.navigateWeather(WeatherRoute.MANAGE_LOCATIONS)
+                },
+                onSettingsClick = {
+                    navController.navigateWeather(WeatherRoute.SETTINGS)
+                },
+                onInfoClick = {
+                    // TODO: Show info
+                }
             )
-        },
-        floatingActionButton = {
-            ManageLocationsFab(expanded = true) {
-                navController.navigateWeather(WeatherRoute.FIND_LOCATION)
-            }
         }
     ) { paddingValues ->
-        // Listen state
-        val locations by viewModel.locations.collectAsStateWithLifecycle()
-        // Build
-        ManageLocationsContent(
-            locations = locations,
+        // TODO: Get state
+        // Build content
+        ForecastContent(
+            items = emptyList(),
             paddingValues = paddingValues.withNavigationBarPadding
         )
     }
