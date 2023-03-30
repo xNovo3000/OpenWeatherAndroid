@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import io.github.xnovo3000.openweather.ui.core.withNavigationBarPadding
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
@@ -21,6 +20,8 @@ fun AddLocationScreen(
     navController: NavController,
     viewModel: AddLocationViewModel = hiltViewModel()
 ) {
+    // Dialog state
+    var isChangeLanguageDialogOpen by remember { mutableStateOf(false) }
     // Screen state
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val focusRequester = remember { FocusRequester() }
@@ -40,17 +41,16 @@ fun AddLocationScreen(
             AddLocationTopBar(
                 query = query,
                 onQueryChange = { viewModel.search(it) },
-                onSearchClick = { textInputService?.hide() },
                 focusRequester = focusRequester,
                 onNavigationIconClick = {
                     navController.popBackStack()
                 },
-                onChangeLanguageClick = { /*TODO*/ },
+                onChangeLanguageClick = { isChangeLanguageDialogOpen = true },
                 scrollBehavior = scrollBehavior
             )
         }
     ) { paddingValues ->
-        // TODO: Listen state
+        // Listen state
         val isCurrentLocationPresent by viewModel.isCurrentLocationPresent.collectAsStateWithLifecycle()
         val geocodedLocationItems by viewModel.geocodedLocationItems.collectAsStateWithLifecycle()
         // Build content
@@ -73,8 +73,22 @@ fun AddLocationScreen(
                     longitude = it.longitude
                 )
             },
-            paddingValues = paddingValues.withNavigationBarPadding
+            paddingValues = paddingValues
         )
     }
-    // TODO: Build dialog to change query language
+    // Build dialog to change query language
+    if (isChangeLanguageDialogOpen) {
+        // Current selected language
+        var selectedLanguage by remember { mutableStateOf(viewModel.queryLanguageFlow.value) }
+        // Build language chooser
+        AddLocationChangeLanguageDialog(
+            selectedLanguage = selectedLanguage,
+            onLanguageSelect = { selectedLanguage = it },
+            onDismissRequest = { isChangeLanguageDialogOpen = false },
+            onConfirm = {
+                viewModel.changeQueryLanguage(selectedLanguage)
+                isChangeLanguageDialogOpen = false
+            }
+        )
+    }
 }

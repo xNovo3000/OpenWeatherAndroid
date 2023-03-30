@@ -1,16 +1,19 @@
 package io.github.xnovo3000.openweather.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import io.github.xnovo3000.openweather.ui.screen.FindLocationScreen
-import io.github.xnovo3000.openweather.ui.screen.ForecastScreen
-import io.github.xnovo3000.openweather.ui.route.managelocations.ManageLocationsScreen
 import io.github.xnovo3000.openweather.ui.core.*
+import io.github.xnovo3000.openweather.ui.route.addlocation.AddLocationScreen
+import io.github.xnovo3000.openweather.ui.route.forecast.ForecastScreen
+import io.github.xnovo3000.openweather.ui.route.managelocations.ManageLocationsScreen
 
 enum class WeatherRoute(val routeName: String) {
     FORECAST(routeName = "forecast"),
@@ -21,6 +24,9 @@ enum class WeatherRoute(val routeName: String) {
 }
 
 @ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @Composable
 fun WeatherUI() {
@@ -35,8 +41,7 @@ fun WeatherUI() {
                 enterTransition = EnterTransition,
                 exitTransition = ExitTransition,
                 popEnterTransition = PopEnterTransition,
-                popExitTransition = PopExitTransition,
-                route = "root"
+                popExitTransition = PopExitTransition
             ) {
                 // Forecast
                 composable(route = WeatherRoute.FORECAST.routeName) {
@@ -46,9 +51,9 @@ fun WeatherUI() {
                 composable(route = WeatherRoute.MANAGE_LOCATIONS.routeName) {
                     ManageLocationsScreen(navController = navController)
                 }
-                // Find location
-                composable(route = WeatherRoute.FIND_LOCATION.routeName) {
-                    FindLocationScreen(navController = navController)
+                // Add location
+                composable(route = WeatherRoute.ADD_LOCATION.routeName) {
+                    AddLocationScreen(navController = navController)
                 }
             }
         }

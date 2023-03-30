@@ -11,7 +11,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
-import io.github.xnovo3000.openweather.ui.core.withNavigationBarPadding
 import io.github.xnovo3000.openweather.ui.navigateWeather
 
 @ExperimentalMaterial3Api
@@ -33,7 +32,7 @@ fun ManageLocationsScreen(
         },
         floatingActionButton = {
             ManageLocationsFab(expanded = true) {
-                navController.navigateWeather(WeatherRoute.FIND_LOCATION)
+                navController.navigateWeather(WeatherRoute.ADD_LOCATION)
             }
         }
     ) { paddingValues ->
@@ -42,7 +41,7 @@ fun ManageLocationsScreen(
         // Build
         ManageLocationsContent(
             locations = locations,
-            paddingValues = paddingValues.withNavigationBarPadding
+            paddingValues = paddingValues
         )
     }
 }

@@ -6,6 +6,9 @@
 
     <!-- AddLocationScreen -->
     <string name="add_location_top_bar_title">Search…</string>
+    <string name="add_location_dialog_title">Change language</string>
+    <string name="add_location_dialog_dismiss">Dismiss</string>
+    <string name="add_location_dialog_confirm">Confirm</string>
 
     <!-- Forecast2Screen -->
     <string name="forecast_2_top_bar_headline">Search locations</string>

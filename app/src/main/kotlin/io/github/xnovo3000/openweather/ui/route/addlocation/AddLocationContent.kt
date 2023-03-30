@@ -1,10 +1,12 @@
 package io.github.xnovo3000.openweather.ui.route.addlocation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 @ExperimentalMaterial3Api
 @Composable
@@ -15,7 +17,10 @@ fun AddLocationContent(
     onAddLocationClick: (GeocodedLocationItem) -> Unit,
     paddingValues: PaddingValues
 ) {
-    LazyColumn(contentPadding = paddingValues) {
+    LazyColumn(
+        modifier = Modifier.imePadding(),
+        contentPadding = paddingValues
+    ) {
         // Current location
         item(key = 0) {
             CurrentLocationItemView(

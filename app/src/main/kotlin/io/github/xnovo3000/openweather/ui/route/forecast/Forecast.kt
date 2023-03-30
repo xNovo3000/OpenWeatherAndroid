@@ -11,9 +11,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import io.github.xnovo3000.openweather.ui.WeatherRoute
-import io.github.xnovo3000.openweather.ui.core.withNavigationBarPadding
 import io.github.xnovo3000.openweather.ui.navigateWeather
-import io.github.xnovo3000.openweather.viewmodel.Forecast2ViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -50,7 +48,7 @@ fun ForecastScreen(
         ForecastContent(
             locations = emptyList(),
             onLocationRefresh = {},
-            paddingValues = paddingValues.withNavigationBarPadding
+            paddingValues = paddingValues
         )
     }
 }

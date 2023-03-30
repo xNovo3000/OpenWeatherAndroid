@@ -66,7 +66,7 @@ object ApplicationModule {
     fun providesWeatherSettings(@ApplicationContext context: Context): DataStore<WeatherSettings> {
         return DataStoreFactory.create(
             serializer = WeatherSettingsSerializer,
-            produceFile = { context.dataStoreFile("settings.pb") }
+            produceFile = { context.dataStoreFile("weather_settings.json") }
         )
     }
 

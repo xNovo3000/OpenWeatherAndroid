@@ -2,8 +2,6 @@ package io.github.xnovo3000.openweather.ui.route.addlocation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActionScope
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -25,7 +23,6 @@ import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 fun AddLocationTopBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onSearchClick: KeyboardActionScope.() -> Unit,
     focusRequester: FocusRequester,
     onNavigationIconClick: () -> Unit,
     onChangeLanguageClick: () -> Unit,
@@ -52,7 +49,6 @@ fun AddLocationTopBar(
                 value = query,
                 onValueChange = onQueryChange,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(onSearch = onSearchClick),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
                     color = LocalContentColor.current
@@ -81,7 +77,6 @@ private fun Preview() {
         AddLocationTopBar(
             query = "",
             onQueryChange = {},
-            onSearchClick = {},
             focusRequester = FocusRequester(),
             onNavigationIconClick = {},
             onChangeLanguageClick = {},

@@ -4,14 +4,21 @@ import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.xnovo3000.openweather.api.retrofit.api.GeocodingApi
 import io.github.xnovo3000.openweather.api.retrofit.dto.GeocodedLocationDto
+import io.github.xnovo3000.openweather.background.worker.UpdateForecastWorker
 import io.github.xnovo3000.openweather.data.datastore.WeatherSettings
+import io.github.xnovo3000.openweather.data.model.QueryLanguage
 import io.github.xnovo3000.openweather.data.room.WeatherDatabase
+import io.github.xnovo3000.openweather.data.room.entity.Location
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +26,7 @@ class AddLocationViewModel @Inject constructor(
     private val weatherDatabase: WeatherDatabase,
     private val weatherSettings: DataStore<WeatherSettings>,
     private val geocodingApi: GeocodingApi,
+    private val workManager: WorkManager,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -29,11 +37,11 @@ class AddLocationViewModel @Inject constructor(
     private var queryJob: Job? = null
 
     fun search(newQuery: String) {
-        // Set query value
-        savedStateHandle["query"] = newQuery
         // Search locations with that query (only if the string is not blank)
         queryJob?.cancel()
         queryJob = viewModelScope.launch {
+            // Set query value
+            savedStateHandle["query"] = newQuery
             // Invalid if query is blank
             if (newQuery.isBlank()) {
                 geocodedLocationsFlow.emit(emptyList())
@@ -43,7 +51,7 @@ class AddLocationViewModel @Inject constructor(
             val geocodedLocations = try {
                 geocodingApi.getGeocodedLocations(
                     name = newQuery,
-                    language = weatherSettings.data.last().queryLanguage.queryName
+                    language = weatherSettings.data.first().queryLanguage.queryName
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -90,7 +98,38 @@ class AddLocationViewModel @Inject constructor(
         latitude: Double,
         longitude: Double
     ) {
+        viewModelScope.launch {
+            // Get last number of sequence
+            val sequenceNumber = weatherDatabase.getLocationDao().getSequenceGroupByMaxSequence()
+            // Create the location
+            val newLocation = Location(
+                id = id,
+                name = name,
+                latitude = latitude,
+                longitude = longitude,
+                lastUpdate = LocalDateTime.MIN,
+                sequence = (sequenceNumber ?: 0) + 1
+            )
+            // Add to the database
+            weatherDatabase.getLocationDao().insert(newLocation)
+            // Force update
+            val forecastUpdateWorker = OneTimeWorkRequestBuilder<UpdateForecastWorker>()
+                .setInputData(inputData = workDataOf("id" to id))
+                .build()
+            workManager.enqueue(forecastUpdateWorker)
+        }
+    }
 
+    /* Language management system */
+
+    val queryLanguageFlow = weatherSettings.data.map { it.queryLanguage }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, QueryLanguage.ENGLISH)
+
+    fun changeQueryLanguage(newQueryLanguage: QueryLanguage) {
+        viewModelScope.launch {
+            // Update settings
+            weatherSettings.updateData { it.copy(queryLanguage = newQueryLanguage) }
+        }
     }
 
 }
