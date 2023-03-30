@@ -1,6 +1,7 @@
 package io.github.xnovo3000.openweather.ui.route.forecast
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -15,6 +16,7 @@ import io.github.xnovo3000.openweather.ui.navigateWeather
 import io.github.xnovo3000.openweather.viewmodel.Forecast2ViewModel
 
 @ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @Composable
 fun ForecastScreen(
@@ -46,7 +48,8 @@ fun ForecastScreen(
         // TODO: Get state
         // Build content
         ForecastContent(
-            items = emptyList(),
+            locations = emptyList(),
+            onLocationRefresh = {},
             paddingValues = paddingValues.withNavigationBarPadding
         )
     }

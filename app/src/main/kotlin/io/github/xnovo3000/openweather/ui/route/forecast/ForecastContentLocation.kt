@@ -14,11 +14,15 @@ import androidx.compose.ui.Modifier
 
 @ExperimentalMaterialApi
 @Composable
-fun ForecastContentLocation(paddingValues: PaddingValues) {
+fun ForecastContentLocation(
+    location: Int,
+    onRefresh: () -> Unit,
+    paddingValues: PaddingValues
+) {
     // Manage state
     val pullRefreshState = rememberPullRefreshState(
         refreshing = false,
-        onRefresh = { /* TODO: Refresh location data */ },
+        onRefresh = onRefresh,
         refreshThreshold = PullRefreshDefaults.RefreshThreshold + paddingValues.calculateTopPadding(),
         refreshingOffset = PullRefreshDefaults.RefreshingOffset + paddingValues.calculateTopPadding()
     )

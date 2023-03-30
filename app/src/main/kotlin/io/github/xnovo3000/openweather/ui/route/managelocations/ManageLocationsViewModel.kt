@@ -16,12 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class ManageLocationsViewModel @Inject constructor(
     weatherDatabase: WeatherDatabase,
-    settings: DataStore<WeatherSettings>
+    weatherSettings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
     private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecastOrderBySequenceAsc()
 
-    val locations = combine(locationsFlow, settings.data) { locations, settingsData ->
+    val locations = combine(locationsFlow, weatherSettings.data) { locations, settings ->
         withContext(Dispatchers.Default) {
             locations.map {
                 ManagedLocationItem(
@@ -33,7 +33,7 @@ class ManageLocationsViewModel @Inject constructor(
                     isNight = if (it.sunrise != null && it.sunset != null) {
                         it.lastUpdate < it.sunrise || it.lastUpdate > it.sunset
                     } else false,
-                    temperatureUnit = settingsData.temperatureUnit
+                    temperatureUnit = settings.temperatureUnit
                 )
             }
         }

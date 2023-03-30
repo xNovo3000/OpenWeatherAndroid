@@ -10,9 +10,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
     weatherDatabase: WeatherDatabase,
-    settings: DataStore<WeatherSettings>
+    weatherSettings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
-    private val locationsFlow = weatherDatabase.getLocationDao().listenAllOrderBySequenceAsc()
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithForecastsOrderBySequenceAsc()
 
 }

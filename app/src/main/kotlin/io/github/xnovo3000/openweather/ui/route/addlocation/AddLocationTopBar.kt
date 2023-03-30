@@ -1,7 +1,8 @@
-package io.github.xnovo3000.openweather.ui.component
+package io.github.xnovo3000.openweather.ui.route.addlocation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -22,7 +23,9 @@ import io.github.xnovo3000.openweather.ui.core.WeatherTheme
 @ExperimentalMaterial3Api
 @Composable
 fun AddLocationTopBar(
-    onSearchClick: (String) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearchClick: KeyboardActionScope.() -> Unit,
     focusRequester: FocusRequester,
     onNavigationIconClick: () -> Unit,
     onChangeLanguageClick: () -> Unit,
@@ -38,9 +41,6 @@ fun AddLocationTopBar(
             }
         },
         title = {
-            // Query state
-            var query by remember { mutableStateOf("") }
-            // Build
             if (query.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.add_location_top_bar_title),
@@ -50,11 +50,9 @@ fun AddLocationTopBar(
             BasicTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = query,
-                onValueChange = { query = it },
+                onValueChange = onQueryChange,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
-                    onSearch = { onSearchClick(query) }
-                ),
+                keyboardActions = KeyboardActions(onSearch = onSearchClick),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
                     color = LocalContentColor.current
@@ -81,6 +79,8 @@ fun AddLocationTopBar(
 private fun Preview() {
     WeatherTheme {
         AddLocationTopBar(
+            query = "",
+            onQueryChange = {},
             onSearchClick = {},
             focusRequester = FocusRequester(),
             onNavigationIconClick = {},

@@ -17,9 +17,12 @@ interface LocationDao {
     @Query("select * from Location where id = :id")
     fun listenByLocationIdWithForecast(id: Long): Flow<LocationWithForecasts?>
 
+    @Query("select * from Location order by sequence asc")
+    fun listenAll(): Flow<List<Location>>
+
     @Transaction
     @Query("select * from Location order by sequence asc")
-    fun listenAllOrderBySequenceAsc(): Flow<List<LocationWithForecasts>>
+    fun listenAllWithForecastsOrderBySequenceAsc(): Flow<List<LocationWithForecasts>>
 
     @Query("select max(sequence) from Location")
     suspend fun getSequenceGroupByMaxSequence(): Int?
