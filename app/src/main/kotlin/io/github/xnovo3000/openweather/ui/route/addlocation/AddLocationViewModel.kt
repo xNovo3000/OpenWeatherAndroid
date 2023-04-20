@@ -100,7 +100,7 @@ class AddLocationViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             // Get last number of sequence
-            val sequenceNumber = weatherDatabase.getLocationDao().getSequenceGroupByMaxSequence()
+            val sequenceNumber = weatherDatabase.getLocationDao().getLeastFavoriteLocation()
             // Create the location
             val newLocation = Location(
                 id = id,

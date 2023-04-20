@@ -13,6 +13,6 @@ class ForecastViewModel @Inject constructor(
     weatherSettings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
-    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithForecastsOrderBySequenceAsc()
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithForecasts()
 
 }

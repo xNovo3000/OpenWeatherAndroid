@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.room.withTransaction
@@ -32,11 +33,6 @@ class UpdateForecastWorker @AssistedInject constructor(
     private val fusedLocationProviderClient: FusedLocationProviderClient
 ) : CoroutineWorker(appContext, workerParams) {
 
-    companion object {
-        const val TAG_ONE_TIME = "io.github.xnovo3000.work.onetime.UpdateForecastWorker"
-        const val TAG_PERIODIC = "io.github.xnovo3000.work.periodic.UpdateForecastWorker"
-    }
-
     @SuppressLint("MissingPermission")
     override suspend fun doWork(): Result {
         // Get ID of the location to update
@@ -45,7 +41,7 @@ class UpdateForecastWorker @AssistedInject constructor(
             inputData.getLong("id", -1L)
         } else {
             // Get favorite location
-            weatherDatabase.getLocationDao().getIdGroupByMinSequence() ?: return Result.failure()
+            weatherDatabase.getLocationDao().getFavoriteLocation() ?: return Result.failure()
         }
         // Get Location object
         var location = weatherDatabase.getLocationDao().getById(locationId) ?: return Result.failure()

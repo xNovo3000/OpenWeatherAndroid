@@ -19,7 +19,7 @@ class ManageLocationsViewModel @Inject constructor(
     weatherSettings: DataStore<WeatherSettings>
 ) : ViewModel() {
 
-    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecastOrderBySequenceAsc()
+    private val locationsFlow = weatherDatabase.getLocationDao().listenAllWithCurrentForecast()
 
     val locations = combine(locationsFlow, weatherSettings.data) { locations, settings ->
         withContext(Dispatchers.Default) {
